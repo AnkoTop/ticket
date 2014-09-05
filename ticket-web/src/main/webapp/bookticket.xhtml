@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="pageTitle">#{msg["page.bookticket.title"]}</ui:define>
+    <ui:define name="pageBody">
+        <h:form value="passengerlist">
+            <rich:dataTable value="#{passengerManagerAction.passengers}" var="passengers">
+                <rich:column><f:facet name="header">Firstname</f:facet>#{passengers.firstName}</rich:column>
+                <rich:column><f:facet name="header">Lastname</f:facet>#{passengers.lastName} </rich:column>
+                <rich:column><f:facet name="header">Birthdate</f:facet>#{passengers.birthDate}</rich:column>
+                <rich:column><f:facet name="header">Type</f:facet>#{passengers.type} </rich:column>
+                <rich:column><f:facet name="header">Internal id #</f:facet>#{passengers.id} </rich:column>
+                <rich:column><f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{passengerManagerAction.editPassenger}" value="Edit" />&nbsp;
+                </rich:column>
+                <rich:column><f:facet name="header"> </f:facet>
+                    <h:commandLink value="Delete" onclick="return confirm('#{msg['page.passengers.form.delete.confirm']}')">
+                        <a4j:ajax listener="#{passengerManagerAction.deletePassenger}" render="@form :growl" oncomplete="fadeOut();"/>
+                    </h:commandLink>
+                </rich:column>
+            </rich:dataTable>
+        </h:form>
+        &nbsp;
+        <h3><a href="./passengercreate.jsf">Add a passenger</a></h3>
+        <h2>Check them <a href="./flights.jsf">flights</a> now or pick an <a href="./airlines.jsf">airline</a>!</h2>
+    </ui:define>
+</ui:composition>
+</html>

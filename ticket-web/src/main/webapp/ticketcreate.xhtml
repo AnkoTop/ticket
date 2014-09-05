@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:comp="http://java.sun.com/jsf/composite/components"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="pageTitle">#{msg["page.ticketcreate.title"]}</ui:define>
+    <ui:define name="pageBody">
+        <h:panelGrid columns="3">
+            <h:panelGroup>
+        <h:form value="passengerlist">
+            <rich:dataTable value="#{ticketManagerAction.passengers}" var="passengers">
+                <rich:column><f:facet name="header">Firstname</f:facet>#{passengers.firstName}</rich:column>
+                <rich:column><f:facet name="header">Lastname</f:facet>#{passengers.lastName} </rich:column>
+                <rich:column><f:facet name="header">Birthdate</f:facet>#{passengers.birthDate}</rich:column>
+                <rich:column><f:facet name="header">Internal id #</f:facet>#{passengers.id} </rich:column>
+                <rich:column><f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{ticketManagerAction.setPassenger}"
+                                   value="Select" /> </rich:column>
+            </rich:dataTable>
+        </h:form>
+            </h:panelGroup>
+            <h:panelGroup/>
+        <h:form value="flightlist">
+            <rich:dataTable value="#{ticketManagerAction.flights}" var="flights">
+                <rich:column><f:facet name="header">Internal id</f:facet>#{flights.id}</rich:column>
+                <rich:column><f:facet name="header">Flight #</f:facet>#{flights.number} </rich:column>
+                <rich:column><f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{ticketManagerAction.setFlight}"
+                                   value="Select" /> </rich:column>
+            </rich:dataTable>
+        </h:form>
+        </h:panelGrid>
+        <br/>
+            <h:form id-="ticketcreate">
+                <comp:inputText id="firstName" field="firstName" label="Firstname" value="#{passengerBean.passenger.firstName}" required="true"/>
+                <comp:inputText id="number" field="number" label="Flight #" value="#{flightBean.flight.number}" required="true"/>
+
+                <comp:inputText id="dateOfDeparture" field="dateOfDeparture" label="Date of departure" value="#{ticketBean.ticket.dateOfDeparture}" required="true"/>
+                <comp:inputText id="price" field="price" label="Price" value="#{ticketBean.ticket.price}" required="true"/>
+                <h:commandButton value="Book it" action="#{ticketManagerAction.createTicket}"  />
+                <comp:confirmCommand action="#{ticketManagerAction.cancel}" confirm="#{msg['page.ticketcreate.form.user.cancel.confirm']}" value="Cancel" immediate="true"/>
+            </h:form>
+    </ui:define>
+</ui:composition>
+</html>

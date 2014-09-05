@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:comp="http://java.sun.com/jsf/composite/components">
+
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="pageTitle">#{msg["page.flightcreate.title"]}</ui:define>
+    <ui:define name="pageBody">
+        <h:form id-="flightcreate">
+            <comp:inputText id="number" field="number"  label="Flight #" value="#{flightBean.flight.number}" required="true"/>
+            <h:commandButton value="Submit" action="#{flightManagerAction.createFlight}" rendered="#{!flightBean.managed}" />
+            <h:commandButton value="Update" action="#{flightManagerAction.updateFlight}" rendered="#{flightBean.managed}"/>
+            <comp:confirmCommand action="#{flightManagerAction.cancel}" confirm="#{msg['page.flightcreate.form.user.cancel.confirm']}" value="Cancel" immediate="true"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>

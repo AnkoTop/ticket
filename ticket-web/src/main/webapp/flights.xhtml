@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+<ui:define name="pageTitle">#{msg["page.flights.title"]}</ui:define>
+<ui:define name="pageBody">
+    <h:form value="flightlist">
+        <rich:dataTable value="#{flightManagerAction.flights}" var="flights">
+            <rich:column><f:facet name="header">Internal id</f:facet>#{flights.id}</rich:column>
+            <rich:column><f:facet name="header">Flight #</f:facet>#{flights.number} </rich:column>
+            <rich:column><f:facet name="header">Actions</f:facet>
+            <h:commandLink action="#{flightManagerAction.editFlight}"
+                 value="Edit" />&nbsp; </rich:column>
+            <rich:column><f:facet name="header"> </f:facet>
+            <h:commandLink value="Delete" onclick="return confirm('#{msg['page.flights.form.delete.confirm']}')">
+                <a4j:ajax listener="#{flightManagerAction.deleteFlight}" render="@form :growl" oncomplete="fadeOut();"/>
+            </h:commandLink>
+            </rich:column>
+        </rich:dataTable>
+    </h:form>
+    &nbsp;
+    <h3><a href="./flightcreate.jsf">Add a new flight</a></h3>
+    <br/>
+    <h:link outcome="index" value="#{msg['page.general.link.index']}" />
+</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:comp="http://java.sun.com/jsf/composite/components">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="pageTitle">#{msg["page.passengercreate.title"]}</ui:define>
+    <ui:define name="pageBody">
+        <h:form id-="passengercreate">
+            <comp:inputText id="firstName" field="firstName"  label="Firstname : " value="#{passengerBean.passenger.firstName}" required="true"/>
+            <comp:inputText id="lastName" field="lastName"  label="Lastname : " value="#{passengerBean.passenger.lastName}" required="true"/>
+            <comp:inputText id="birthDate" field="birthDate"  label="Birthdate : " value="#{passengerBean.passenger.birthDate}" required="true"/>
+            <h:selectOneRadio value="#{passengerBean.passenger.type}" required="true">
+                    <f:selectItem itemValue="REGULAR" itemLabel="Regular"/>
+                    <f:selectItem itemValue="OCCASIONAL" itemLabel="Occasional"/>
+            </h:selectOneRadio>
+            <h:commandButton value="Submit" action="#{passengerManagerAction.createPassenger}" rendered="#{!passengerBean.managed}" />
+            <h:commandButton value="Update" action="#{passengerManagerAction.updatePassenger}" rendered="#{passengerBean.managed}" />
+            <comp:confirmCommand action="#{passengerManagerAction.cancel}" confirm="#{msg['page.passengercreate.form.user.cancel.confirm']}" value="Cancel" immediate="true"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

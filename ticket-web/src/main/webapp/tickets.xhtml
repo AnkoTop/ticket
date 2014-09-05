@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/WEB-INF/templates/template.xhtml">
+    <ui:define name="pageTitle">#{msg["page.tickets.title"]}</ui:define>
+    <ui:define name="pageBody">
+        <h:form value="ticketlist">
+            <rich:dataTable value="#{ticketManagerAction.tickets}" var="tickets">
+                <rich:column><f:facet name="header">Passenger</f:facet>#{tickets.passenger.firstName}</rich:column>
+                <rich:column><f:facet name="header"></f:facet>#{tickets.passenger.lastName}</rich:column>
+                <rich:column><f:facet name="header">Flight #</f:facet>#{tickets.flight.number}</rich:column>
+                <rich:column><f:facet name="header">Date of departure</f:facet>#{tickets.dateOfDeparture} </rich:column>
+                <rich:column><f:facet name="header">Price</f:facet>#{tickets.price} </rich:column>
+                <rich:column><f:facet name="header">Internal id</f:facet>#{tickets.id}</rich:column>
+              </rich:dataTable>
+        </h:form>
+        <h3><a href="./ticketcreate.jsf">Add a new ticket</a></h3>
+        <br/>
+        <h:link outcome="index" value="#{msg['page.general.link.index']}" />
+    </ui:define>
+</ui:composition>
+</html>
